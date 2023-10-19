@@ -1,0 +1,560 @@
+[
+  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "owner", "type": "address" }
+    ],
+    "name": "OwnableInvalidOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "OwnableUnauthorizedAccount",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "adId",
+        "type": "uint256"
+      }
+    ],
+    "name": "AdDeactivate",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "advertisor",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "adId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "clicks",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "impressions",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isPermanent",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum Advertise.Category",
+        "name": "",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "cid",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "adName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "chainId",
+        "type": "uint256"
+      }
+    ],
+    "name": "AdPut",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "BrokerageWithdrawal",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "platformAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "platformIdx",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "adId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "activeAdEarning",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "totalEarning",
+        "type": "uint256"
+      }
+    ],
+    "name": "PlatformEarning",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "platformAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "chainId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "platformId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "platformName",
+        "type": "string"
+      }
+    ],
+    "name": "PlatformRegistered",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "origin",
+        "type": "uint32"
+      },
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "sender",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "message",
+        "type": "string"
+      }
+    ],
+    "name": "ReceivedMessage",
+    "type": "event"
+  },
+  { "stateMutability": "payable", "type": "fallback" },
+  {
+    "inputs": [],
+    "name": "ImpressionsToClicksRatio",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "advertisements",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "clicks", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "impressions",
+            "type": "uint256"
+          },
+          {
+            "internalType": "enum Advertise.Category",
+            "name": "category",
+            "type": "uint8"
+          },
+          { "internalType": "string", "name": "description", "type": "string" },
+          { "internalType": "string", "name": "cid", "type": "string" },
+          { "internalType": "string", "name": "adName", "type": "string" }
+        ],
+        "internalType": "struct Advertise.AdDetails",
+        "name": "details",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "advertisor",
+            "type": "address"
+          },
+          { "internalType": "uint256", "name": "id", "type": "uint256" },
+          { "internalType": "uint256", "name": "clicks", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "impressions",
+            "type": "uint256"
+          },
+          { "internalType": "bool", "name": "isActive", "type": "bool" },
+          { "internalType": "bool", "name": "isPermanent", "type": "bool" },
+          { "internalType": "uint32", "name": "chainId", "type": "uint32" }
+        ],
+        "internalType": "struct Advertise.AdCredentials",
+        "name": "creds",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "advertisor", "type": "address" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "name": "advertisorsAds",
+    "outputs": [
+      { "internalType": "uint256", "name": "idxes", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "_platformAddresses",
+        "type": "address[]"
+      },
+      { "internalType": "uint256[]", "name": "_clicks", "type": "uint256[]" },
+      {
+        "internalType": "uint256[]",
+        "name": "_impressions",
+        "type": "uint256[]"
+      },
+      { "internalType": "uint256", "name": "_adId", "type": "uint256" }
+    ],
+    "name": "batchUpdateClicksAndImpressions",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "brokerage",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "costperClick",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "costperImpression",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "platformAddress",
+        "type": "address"
+      },
+      { "internalType": "uint256", "name": "adId", "type": "uint256" }
+    ],
+    "name": "getClicksAndImpressions",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "platformClicks",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "platformImpressions",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "activeEarning",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Advertise.ClicksAndImpressions",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint32", "name": "_origin", "type": "uint32" },
+      { "internalType": "bytes32", "name": "_sender", "type": "bytes32" },
+      { "internalType": "bytes", "name": "_data", "type": "bytes" }
+    ],
+    "name": "handle",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "interchainSecurityModule",
+    "outputs": [
+      {
+        "internalType": "contract IInterchainSecurityModule",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "permanentAdCharge",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "platformIdxToAddress",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "platforms",
+    "outputs": [
+      { "internalType": "uint256", "name": "activeEarning", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalEarning", "type": "uint256" },
+      {
+        "internalType": "address",
+        "name": "platformAddress",
+        "type": "address"
+      },
+      { "internalType": "string", "name": "platformName", "type": "string" },
+      { "internalType": "uint256", "name": "platformIdx", "type": "uint256" },
+      { "internalType": "uint32", "name": "chainId", "type": "uint32" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "clicks", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "impressions",
+            "type": "uint256"
+          },
+          {
+            "internalType": "enum Advertise.Category",
+            "name": "category",
+            "type": "uint8"
+          },
+          { "internalType": "string", "name": "description", "type": "string" },
+          { "internalType": "string", "name": "cid", "type": "string" },
+          { "internalType": "string", "name": "adName", "type": "string" }
+        ],
+        "internalType": "struct Advertise.AdDetails",
+        "name": "_ad",
+        "type": "tuple"
+      },
+      { "internalType": "address", "name": "advertisor", "type": "address" },
+      { "internalType": "bool", "name": "_isPermanent", "type": "bool" },
+      { "internalType": "uint32", "name": "_chainId", "type": "uint32" }
+    ],
+    "name": "putAd",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "receiver", "type": "address" }
+    ],
+    "name": "recievePay",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_name", "type": "string" },
+      { "internalType": "uint32", "name": "_chainId", "type": "uint32" },
+      {
+        "internalType": "address",
+        "name": "_platformAddress",
+        "type": "address"
+      }
+    ],
+    "name": "registerPlatform",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_ism", "type": "address" }
+    ],
+    "name": "setInterchainSecurityModule",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalAds",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalPlatforms",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "newOwner", "type": "address" }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_costperClick", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "_costperImpression",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateCostPlan",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_newRatio", "type": "uint256" }
+    ],
+    "name": "updateImpressionsToClicksRatio",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawBrokerage",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  { "stateMutability": "payable", "type": "receive" }
+]
