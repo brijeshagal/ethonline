@@ -2,10 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@layer utilities {
+  body::-webkit-scrollbar {
+    width: 0.4em;
+    background-color: #0b192f;
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background-color: #4c5474;
+    scrollbar-gutter: stable;
+    border-radius: 40px;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

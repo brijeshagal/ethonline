@@ -2,17 +2,19 @@ import { writeContract, readContract } from '@wagmi/core'
 import ABI from '@/contracts/AdvertiseAbi.json';
 import { contractAddresses } from "@/utils/contractAddresses"
 import { getNetwork } from '@wagmi/core';
+import { useAccount } from 'wagmi';
 const { chain } = getNetwork();
 export const registerPlatform = async (platformName: string) => {
     try {
 
-        if (chain) {
+        const { address } = useAccount();
+        if (chain && address) {
             const contractAddress = `${contractAddresses[chain.id]}`;
             const { hash } = await writeContract({
                 address: `0x${contractAddress}`,
                 abi: ABI,
                 functionName: 'registerPlatform',
-                args: [platformName],
+                args: [platformName, chain.id, address],
             });
             console.log(hash);
             return hash;
@@ -22,9 +24,10 @@ export const registerPlatform = async (platformName: string) => {
         console.log(e);
     }
 }
-export const putAd = async (clicks: string, impressions: string, categories: Array<number>, description: string, rootCid: string) => {
+export const putAd = async (clicks: string, impressions: string, category: number, description: string, rootCid: string, adName: string, isPermanent: boolean) => {
     try {
-        if (chain) {
+        const { address } = useAccount();
+        if (chain && address) {
             const contractAddress = `${contractAddresses[chain.id]}`;
             const costPerClick = await costperClick();
             const costPerImpression = await costperImpression();
@@ -35,7 +38,7 @@ export const putAd = async (clicks: string, impressions: string, categories: Arr
                     address: `0x${contractAddress}`,
                     abi: ABI,
                     functionName: 'putAd',
-                    args: [{ clicks, impressions, categories, description, rootCid }],
+                    args: [{ clicks, impressions, category, description, rootCid, adName }, address, isPermanent, chain.id],
                     value: amount
                 });
                 console.log(hash);
@@ -105,16 +108,36 @@ export const costperImpression = async () => {
     }
     return 0;
 }
-
-export const getAd = async (adId: number) => {
+export const impressionsToClicksRatio = async () => {
     try {
         if (chain) {
             const contractAddress = `${contractAddresses[chain.id]}`;
             const data = await readContract({
                 address: `0x${contractAddress}`,
                 abi: ABI,
+                functionName: 'ImpressionsToClicksRatio',
+                args: [],
+            })
+            console.log("ImpressionsToClicksRatio: ", data);
+            return BigInt(data as string);
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
+    return 0;
+}
+
+export const getAd = async (adId: number) => {
+    try {
+        const { address } = useAccount();
+        if (chain && address) {
+            const contractAddress = `${contractAddresses[chain.id]}`;
+            const data = await readContract({
+                address: `0x${contractAddress}`,
+                abi: ABI,
                 functionName: 'advertisements',
-                args: [adId],
+                args: [address, adId],
             })
             console.log(data);
             return data;
