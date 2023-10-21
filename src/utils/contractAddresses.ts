@@ -3,6 +3,7 @@ export const contractAddresses: { [key: string]: string } = {
   534351: "0x8B63F8f355A0fF64b181484c74701f96DAB3DF65",
   314159: "0x8B63F8f355A0fF64b181484c74701f96DAB3DF65",
   5001: "0x8B63F8f355A0fF64b181484c74701f96DAB3DF65"
+  
 };
 // Scroll Sepolia TxnId: 0x55fa9816d8944621e3afcabefa8c6d6328a1173d140a69ea4245b1b5e1304d65
 // Filecoin Calibration TxnId: 0xb9992e8e704dd5325da3f2f585df3b7e5b3b773567f1b51973242408ca6f5c84
