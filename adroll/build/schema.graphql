@@ -1,0 +1,74 @@
+type AdDeactivate @entity(immutable: true) {
+  id: Bytes!
+  param0: Bytes! # address
+  adId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type AdPut @entity(immutable: true) {
+  id: Bytes!
+  advertisor: Bytes! # address
+  adId: BigInt! # uint256
+  clicks: BigInt! # uint256
+  impressions: BigInt! # uint256
+  isPermanent: Boolean! # bool
+  param5: Int! # uint8
+  cid: String! # string
+  adName: String! # string
+  chainId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type BrokerageWithdrawal @entity(immutable: true) {
+  id: Bytes!
+  param0: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PlatformEarning @entity(immutable: true) {
+  id: Bytes!
+  platformAddress: Bytes! # address
+  platformIdx: BigInt! # uint256
+  adId: BigInt! # uint256
+  activeAdEarning: BigInt! # uint256
+  totalEarning: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PlatformRegistered @entity(immutable: true) {
+  id: Bytes!
+  platformAddress: Bytes! # address
+  chainId: BigInt! # uint256
+  platformId: BigInt! # uint256
+  platformName: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ReceivedMessage @entity(immutable: true) {
+  id: Bytes!
+  origin: BigInt! # uint32
+  sender: Bytes! # bytes32
+  message: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

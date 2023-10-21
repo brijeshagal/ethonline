@@ -98,6 +98,7 @@ export const costperImpression = async () => {
                 abi: ABI,
                 functionName: 'costperImpression',
                 args: [],
+                chainId: 80001
             })
             console.log("Cost Per Impression: ", data);
             return BigInt(data as string);
@@ -117,6 +118,7 @@ export const impressionsToClicksRatio = async () => {
                 abi: ABI,
                 functionName: 'ImpressionsToClicksRatio',
                 args: [],
+                chainId: 80001
             })
             console.log("ImpressionsToClicksRatio: ", data);
             return BigInt(data as string);

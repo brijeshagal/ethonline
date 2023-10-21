@@ -9,6 +9,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Providers>
       <div>
+        <div id="gifs" className='z-[100] hidden absolute flex items-center justify-center mx-auto w-screen h-screen '>
+          <img src={"/img/rhino-running.gif"} className=' object-contain' />
+        </div>
         <Navbar />
         <Component {...pageProps} id="app" />
       </div>

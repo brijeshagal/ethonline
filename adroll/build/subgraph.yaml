@@ -1,0 +1,43 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: AdRoll
+    network: mumbai
+    source:
+      address: "0x0874726A5671A6c2feDd2705746451fd5D4448ef"
+      abi: AdRoll
+      startBlock: 41361569
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AdDeactivate
+        - AdPut
+        - BrokerageWithdrawal
+        - OwnershipTransferred
+        - PlatformEarning
+        - PlatformRegistered
+        - ReceivedMessage
+      abis:
+        - name: AdRoll
+          file: AdRoll\abis\AdRoll.json
+      eventHandlers:
+        - event: AdDeactivate(indexed address,indexed uint256)
+          handler: handleAdDeactivate
+        - event: AdPut(indexed address,indexed
+            uint256,uint256,uint256,bool,uint8,string,string,uint256)
+          handler: handleAdPut
+        - event: BrokerageWithdrawal(uint256)
+          handler: handleBrokerageWithdrawal
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PlatformEarning(indexed address,uint256,indexed uint256,uint256,uint256)
+          handler: handlePlatformEarning
+        - event: PlatformRegistered(indexed address,uint256,indexed uint256,string)
+          handler: handlePlatformRegistered
+        - event: ReceivedMessage(indexed uint32,indexed bytes32,string)
+          handler: handleReceivedMessage
+      file: AdRoll\AdRoll.wasm

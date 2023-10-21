@@ -27,8 +27,11 @@ const RegisterPlatformButton: React.FC = ({
         }
     };
     useEffect(() => {
+        const loading = document.getElementById('gifs');
         const queryResult = async () => {
             setLoader(true);
+            loading?.classList.toggle('hidden');
+            // loading?.classList.toggle('absolute');
             const details: any = await pubClient.readContract({
                 address: '0x0874726A5671A6c2feDd2705746451fd5D4448ef',
                 abi: ABI,
@@ -36,22 +39,24 @@ const RegisterPlatformButton: React.FC = ({
                 args: [platform],
             });
             setPlatformDetails(details);
+            setLoader(false);
+            loading?.classList.toggle('hidden');
         }
         if (platform) {
             queryResult();
+            // loading?.classList.toggle('absolute');
         }
     }, []);
-    console.log(platformDetails)
     return (
         <div>{
-            platformDetails[2] === platform ? <></> :
+            loader === false ? (platformDetails[2] === platform ? <></> :
                 <div >
                     <input type="text" className='text-black' onChange={(e) => setPlatformName(e.target.value)} />
                     <button onClick={handleClick}>
                         Register
                     </button>
                 </div>
-        }
+            ) : <></>}
         </div>
     );
 };

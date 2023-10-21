@@ -795,6 +795,13 @@
     "@tanstack/query-core" "4.36.1"
     use-sync-external-store "^1.2.0"
 
+"@types/axios@^0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@types/axios/-/axios-0.14.0.tgz#ec2300fbe7d7dddd7eb9d3abf87999964cafce46"
+  integrity sha512-KqQnQbdYE54D7oa/UmYVMZKq7CO4l8DEENzOKc4aBRwxCXSlJXGz83flFx5L7AWrOQnmuN3kVsRdt+GZPPjiVQ==
+  dependencies:
+    axios "*"
+
 "@types/connect@^3.4.33":
   version "3.4.36"
   resolved "https://registry.yarnpkg.com/@types/connect/-/connect-3.4.36.tgz#e511558c15a39cb29bd5357eebb57bd1459cd1ab"
@@ -901,10 +908,16 @@
   dependencies:
     "@types/node" "*"
 
-"@vampire-ab/adroll@^0.0.2":
-  version "0.0.2"
-  resolved "https://npm.pkg.github.com/download/@vampire-ab/adroll/0.0.2/69464353369ae121b9562b49e05d2582e36a2e02#69464353369ae121b9562b49e05d2582e36a2e02"
-  integrity sha512-Rr5lrTun9UV9EIpxB84xisBfL6ke7QLdLs1pkQkhE+tfR1aD7ju9kBmjSGKufYewTN37LJLW/C3ZVldURKjHtA==
+"@vampire-ab/adroll@^0.0.4":
+  version "0.0.4"
+  resolved "https://npm.pkg.github.com/download/@vampire-ab/adroll/0.0.4/1aa52ad58a9f379e7f212ff5da93fdd9f171d38a#1aa52ad58a9f379e7f212ff5da93fdd9f171d38a"
+  integrity sha512-7yyTbK53GI5CGBObtsRnDvcv9FmbuyKaocGE4m1ioWkY7LhqWI6SwUjcXbTJS1W24fyU0JvOpzUj3Ji9cP6hzA==
+  dependencies:
+    "@types/axios" "^0.14.0"
+    axios "^1.5.1"
+    postcss "^8.4.31"
+    react "^18.2.0"
+    web3.storage "^4.5.5"
 
 "@vanilla-extract/css@1.9.1":
   version "1.9.1"
@@ -1577,7 +1590,7 @@ available-typed-arrays@^1.0.5:
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
-axios@^1.5.1:
+axios@*, axios@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.5.1.tgz#11fbaa11fc35f431193a9564109c88c1f27b585f"
   integrity sha512-Q28iYCWzNHjAm+yEAot5QaAMxhMghWLFVf7rRdwhUI+c2jix2DUXjAHXVi+s1ibs3mjPO/cCgbA++3BjD0vP/A==
@@ -3515,7 +3528,7 @@ postcss-value-parser@^4.0.0, postcss-value-parser@^4.2.0:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
-postcss@8.4.31, postcss@^8, postcss@^8.4.23:
+postcss@8.4.31, postcss@^8, postcss@^8.4.23, postcss@^8.4.31:
   version "8.4.31"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.31.tgz#92b451050a9f914da6755af352bdc0192508656d"
   integrity sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==
@@ -4046,7 +4059,7 @@ react-style-singleton@^2.2.1:
     invariant "^2.2.4"
     tslib "^2.0.0"
 
-react@^18:
+react@^18, react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==

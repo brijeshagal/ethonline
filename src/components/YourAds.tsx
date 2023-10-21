@@ -9,7 +9,10 @@ const YourAds = () => {
     const [myAds, setMyAds] = React.useState<Array<any>>([]);
     const [loader, setLoader] = React.useState<boolean>(true);
     useEffect(() => {
+        const loading = document.getElementById('gifs');
         const queryResult = async () => {
+
+            loading?.classList.toggle('hidden');
             setLoader(true);
             const query = `query GetAds{            
                 adPuts(first: 5, where: {advertisor:"0x5B38Da6a701c568545dCfcB03FcB875f56beddC4"}) {
@@ -17,13 +20,17 @@ const YourAds = () => {
                     advertisor
                     adId
                     clicks
+                    impressions
                     cid
+                    adName
                   }    
             }`
-            const res = await axios.post("https://api.studio.thegraph.com/query/54418/adroll/v0.0.2", { query: query })
+            const res = await axios.post("https://api.studio.thegraph.com/query/54418/adroll/version/latest", { query: query })
             console.log(res);
             setMyAds(res.data.data.adPuts);
             setLoader(false);
+
+            loading?.classList.toggle('hidden');
         }
         return () => {
 
@@ -35,11 +42,13 @@ const YourAds = () => {
     return (
         <div className="">
             {loader ? <></> :
-                myAds.map((ad: any, idx) => {
-                    return (<div key={idx}>
-                        <AdDetails ad={ad} />
-                    </div>)
-                })
+                <div className='flex justify-center items-center gap-5'>
+                    {myAds.map((ad: any, idx) => {
+                        return (<div key={idx}>
+                            <AdDetails ad={ad} />
+                        </div>)
+                    })}
+                </div>
             }
         </div>
     )

@@ -17,11 +17,8 @@ import {
 /* <--------------- Wagmi Imports ---------------> */
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import {
-  mainnet,
-  polygon,
-  goerli,
   polygonMumbai,
-  avalanche,
+  scrollSepolia
 } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 /*<------  Custom Chains imports  ------> */
@@ -29,7 +26,7 @@ import "@/utils/customChains";
 
 // Chains setup
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [mainnet, polygon, goerli, polygonMumbai, avalanche],
+  [polygonMumbai, scrollSepolia],
   [publicProvider()]
 );
 // Wallet setup
