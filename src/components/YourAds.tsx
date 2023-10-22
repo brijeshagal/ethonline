@@ -9,28 +9,33 @@ const YourAds = () => {
     const [myAds, setMyAds] = React.useState<Array<any>>([]);
     const [loader, setLoader] = React.useState<boolean>(true);
     useEffect(() => {
-        const loading = document.getElementById('gifs');
         const queryResult = async () => {
+            if (advertisor) {
+                try {
 
-            loading?.classList.toggle('hidden');
-            setLoader(true);
-            const query = `query GetAds{            
-                adPuts(first: 5, where: {advertisor:"0x5B38Da6a701c568545dCfcB03FcB875f56beddC4"}) {
-                    id
-                    advertisor
+                    setLoader(true);
+                    const query = `query GetAds{            
+                        adPuts(first: 5, where: {advertisor:"${advertisor}"}) {
+                            id
+                            advertisor
                     adId
                     clicks
-                    impressions
+                    impressionsF
                     cid
                     adName
-                  }    
+                }    
             }`
-            const res = await axios.post("https://api.studio.thegraph.com/query/54418/adroll/version/latest", { query: query })
-            console.log(res);
-            setMyAds(res.data.data.adPuts);
-            setLoader(false);
-
-            loading?.classList.toggle('hidden');
+                    const res = await axios.post("https://api.studio.thegraph.com/query/54418/adroll/version/latest", { query: query })
+                    console.log(res);
+                    if (res.data.data.adPuts.length !== 0) {
+                        setMyAds(res.data.data.adPuts);
+                        setLoader(false);
+                    }
+                }
+                catch (e) {
+                    console.log(e);
+                }
+            }
         }
         return () => {
 

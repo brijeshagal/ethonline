@@ -4,10 +4,8 @@ import { contractAddresses } from "@/utils/contractAddresses"
 import { getNetwork } from '@wagmi/core';
 import { useAccount } from 'wagmi';
 const { chain } = getNetwork();
-export const registerPlatform = async (platformName: string) => {
+export const registerPlatform = async (platformName: string, address: string) => {
     try {
-
-        const { address } = useAccount();
         if (chain && address) {
             const contractAddress = `${contractAddresses[chain.id]}`;
             const { hash } = await writeContract({
@@ -24,9 +22,26 @@ export const registerPlatform = async (platformName: string) => {
         console.log(e);
     }
 }
-export const putAd = async (clicks: string, impressions: string, category: number, description: string, rootCid: string, adName: string, isPermanent: boolean) => {
+export const recievePay = async (platformAddress: string) => {
     try {
-        const { address } = useAccount();
+        if (chain && platformAddress) {
+            const contractAddress = `${contractAddresses[chain.id]}`;
+            const { hash } = await writeContract({
+                address: `0x${contractAddress}`,
+                abi: ABI,
+                functionName: 'recievePay',
+                args: [platformAddress],
+            });
+            console.log(hash);
+            return hash;
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+export const putAd = async (clicks: string, impressions: string, category: number, description: string, rootCid: string, adName: string, isPermanent: boolean, address: string) => {
+    try {
         if (chain && address) {
             const contractAddress = `${contractAddresses[chain.id]}`;
             const costPerClick = await costperClick();
@@ -54,7 +69,7 @@ export const putAd = async (clicks: string, impressions: string, category: numbe
 export const brokerage = async () => {
     try {
         if (chain) {
-            const contractAddress = `${contractAddresses[chain.id]}`;
+            const contractAddress = `${contractAddresses[80001]}`;
             const data = await readContract({
                 address: `0x${contractAddress}`,
                 abi: ABI,
@@ -73,7 +88,7 @@ export const brokerage = async () => {
 export const costperClick = async () => {
     try {
         if (chain) {
-            const contractAddress = `${contractAddresses[chain.id]}`;
+            const contractAddress = `${contractAddresses[80001]}`;
             const data = await readContract({
                 address: `0x${contractAddress}`,
                 abi: ABI,
@@ -92,7 +107,7 @@ export const costperClick = async () => {
 export const costperImpression = async () => {
     try {
         if (chain) {
-            const contractAddress = `${contractAddresses[chain.id]}`;
+            const contractAddress = `${contractAddresses[80001]}`;
             const data = await readContract({
                 address: `0x${contractAddress}`,
                 abi: ABI,
@@ -112,7 +127,7 @@ export const costperImpression = async () => {
 export const impressionsToClicksRatio = async () => {
     try {
         if (chain) {
-            const contractAddress = `${contractAddresses[chain.id]}`;
+            const contractAddress = `${contractAddresses[80001]}`;
             const data = await readContract({
                 address: `0x${contractAddress}`,
                 abi: ABI,
@@ -134,7 +149,7 @@ export const getAd = async (adId: number) => {
     try {
         const { address } = useAccount();
         if (chain && address) {
-            const contractAddress = `${contractAddresses[chain.id]}`;
+            const contractAddress = `${contractAddresses[80001]}`;
             const data = await readContract({
                 address: `0x${contractAddress}`,
                 abi: ABI,
@@ -143,6 +158,51 @@ export const getAd = async (adId: number) => {
             })
             console.log(data);
             return data;
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
+    return 0;
+}
+
+export const platformDetails = async (address: string) => {
+    try {
+        if (chain) {
+            const contractAddress = `${contractAddresses[chain.id]}`;
+            const data = await readContract({
+                address: `0x${contractAddress}`,
+                abi: ABI,
+                functionName: 'platforms',
+                args: [address],
+            })
+            console.log("Platform details: ", data);
+            return data as any;
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
+    return 0;
+}
+
+export const platformAdDetails = async (adIds: Array<string>, address: string) => {
+    try {
+        if (chain) {
+            const adDetails = [];
+            const contractAddress = `${contractAddresses[80001]}`;
+            for (let i = 0; i < adIds.length; i++) {
+                const data = await readContract({
+                    address: `0x${contractAddress}`,
+                    abi: ABI,
+                    functionName: 'getClicksAndImpressions',
+                    args: [address, adIds[i]],
+                    chainId: 80001
+                })
+                adDetails.push({adId: adIds[i], data: data});
+            }
+            console.log("PlatformAdDetails: ", adDetails);
+            return adDetails;
         }
     }
     catch (e) {

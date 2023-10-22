@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { putAd, impressionsToClicksRatio } from '@/utils/contractInteractions';
 import { Web3Storage } from 'web3.storage';
-import { getNetwork } from '@wagmi/core';
+import { useAccount } from 'wagmi';
 const categoryOptions = ['Art',
     'Music',
     'Photography',
@@ -16,8 +16,7 @@ type props = {
     setShowForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 const PutAd: React.FC<props> = ({ setShowForm }: props) => {
-    const { chain } = getNetwork();
-    console.log(chain);
+    const { address } = useAccount();
     const [loadingMsg, setLoadingMsg] = React.useState('');
     const [isUploading, setIsUploading] = React.useState(false);
     const [adName, setAdName] = React.useState('');
@@ -33,9 +32,9 @@ const PutAd: React.FC<props> = ({ setShowForm }: props) => {
         try {
             const ratio = await impressionsToClicksRatio();
             const client = new Web3Storage({ token: process.env.NEXT_PUBLIC_WEB3_STORAGE });
-            const fileInput = document.getElementById('dwebfiles') as HTMLInputElement;
+            const fileInput = document.getElementById('file-upload') as HTMLInputElement;
             console.log(fileInput?.files);
-            if (fileInput && adName && description && noOfClicks && noOfImpressions && BigInt(noOfImpressions) >= BigInt(noOfClicks) * BigInt(ratio)) {
+            if (address) {
                 setLoadingMsg('Uploading to ipfs');
                 const rootCid = await client.put(fileInput?.files, {
                     name: adName,
@@ -44,7 +43,7 @@ const PutAd: React.FC<props> = ({ setShowForm }: props) => {
                 console.log(rootCid);
                 // const rootCid = 'bafybeia7d3qmtqunuxme4sq3tkgjtt3q5fhatzhdgmcozkoskyetcm52ru';
                 setLoadingMsg('Waiting for wallet confirmation..');
-                const hash = await putAd(noOfClicks, noOfImpressions, category, description, rootCid, adName, isPermanent);
+                const hash = await putAd(noOfClicks, noOfImpressions, category, description, rootCid, adName, isPermanent, address);
                 console.log(hash);
             }
             else {
@@ -64,8 +63,8 @@ const PutAd: React.FC<props> = ({ setShowForm }: props) => {
 
     return (
         <div className='text-white'>
-            <section className="p-6 mx-auto bg-indigo-600 rounded-md shadow-md dark:bg-gray-800 mt-20">
-                <button onClick={() => setShowForm(false)} className="text text-white dark:text-white underline underline-offset-4 ">&lt; Get Back{"  "}</button>
+            <section className="p-6 flex flex-col mx-auto bg-indigo-500 rounded-md shadow-md dark:bg-gray-800 mt-20">
+                <button onClick={() => setShowForm(false)} className="w-fit text-white dark:text-white underline underline-offset-4 ml-auto mr-0">&lt; Get Back{"  "}</button>
                 <form>
                     <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                         <div>
@@ -131,7 +130,7 @@ const PutAd: React.FC<props> = ({ setShowForm }: props) => {
                         <div className='w-fit my-auto mr-8 text-red-400'>{errorMsg}</div>
                         <button type="submit" onClick={handleClick} id="submit"
                             className="px-6 ml-auto w-40 py-2 leading-5 text-white transition-colors duration-200 
-                        transform bg-purple-600 
+                        transform bg-primary 
                         rounded-md hover:bg-secondary 
                         focus:outline-none ">Lets Roll</button>
                     </div>

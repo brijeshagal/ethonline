@@ -18,7 +18,8 @@ import {
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import {
   polygonMumbai,
-  scrollSepolia
+  scrollSepolia,
+  mantleTestnet, filecoinCalibration
 } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 /*<------  Custom Chains imports  ------> */
@@ -26,7 +27,7 @@ import "@/utils/customChains";
 
 // Chains setup
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [polygonMumbai, scrollSepolia],
+  [polygonMumbai, scrollSepolia, mantleTestnet, filecoinCalibration],
   [publicProvider()]
 );
 // Wallet setup

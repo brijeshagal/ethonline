@@ -3,9 +3,9 @@ import Image from "next/image";
 
 export default function Navbar() {
   return (
-    <div className="flex px-7 py-4 h-[100px] justify-between">
-      <div className="w-20 h-20">
-        <img src={'/img/LogoWithNoBg.png'} />
+    <div className="flex px-7 py-2 h-[120px] justify-between">
+      <div className="w-20 h-20 rounded-full overflow-hidden">
+        <img src={'/img/LogoWithBlackBg.png'} className="object-center" />
       </div>
       <div>
         <ConnectButton.Custom>

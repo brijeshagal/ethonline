@@ -1,7 +1,6 @@
 import React from 'react';
 import { Web3Storage } from 'web3.storage';
 import { Carousel } from 'antd';
-import Image from 'next/image';
 type Props = {
     ad: any;
 }
@@ -30,17 +29,15 @@ export default function AdDetails({ ad }: Props) {
         }
     }, [])
     return (
-        <div className='w-[500px]'>
+        <div className='w-[500px] p-5 overflow-hidden rounded-3xl bg-primary'>
             <div>
-
-                <div className='text-whitesmoke mx-auto mt-10 mb-2 w-fit underline underline-offset-8 decoration-4 decoration-purple-600'>{ad.adName}</div>
-
+                <div className='text-whitesmoke mx-auto mb-2 w-fit underline underline-offset-8 decoration-4 decoration-primary'>{ad.adName}</div>
             </div>
             <div className='flex items-center justify-center'>
                 <Carousel autoplay style={carouselStyle}>
                     {ads.map((specificAd, idx) => {
-                        return (<div key={idx}>
-                            <img src={`https://${specificAd.cid}.ipfs.w3s.link`} className='object-contain' />
+                        return (<div key={idx} className='w-full h-full'>
+                            <img src={`https://${specificAd.cid}.ipfs.w3s.link`} className='object-fit w-full h-full' />
                         </div>)
                     })}
                 </Carousel>
